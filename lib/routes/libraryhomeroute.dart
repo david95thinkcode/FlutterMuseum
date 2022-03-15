@@ -1,0 +1,21 @@
+import 'package:flutter/material.dart';
+
+class LibraryHomeRoute extends StatelessWidget {
+  const LibraryHomeRoute({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Libraries Home"),
+      ),
+      body: Center(
+        child: Column(
+          children: const <Widget>[
+            Text("Libraries Home")
+          ],
+        ),
+      ),
+    );
+  }
+}
