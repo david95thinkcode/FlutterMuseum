@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:museum/widgets/booklist.dart';
 
 class BookHomeRoute extends StatefulWidget {
   const BookHomeRoute({Key? key}) : super(key: key);
@@ -8,18 +9,22 @@ class BookHomeRoute extends StatefulWidget {
 }
 
 class _BookHomeRouteState extends State<BookHomeRoute> {
+
+  void _onFabpressed() {
+    Navigator.pushNamed(context, "/books/create");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Books home"),
+          title: const Text("Ouvrages")
       ),
-      body: Center(
-        child: Column(
-          children: const <Widget>[
-            Text("Books home")
-          ],
-        ),
+      body: const BookList(),
+      floatingActionButton: FloatingActionButton(
+        tooltip: "Ajouter",
+        child: const Icon(Icons.add),
+        onPressed: _onFabpressed,
       ),
     );
   }

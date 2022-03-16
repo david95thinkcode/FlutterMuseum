@@ -11,4 +11,18 @@ class Book {
     required this.nbPages,
     required this.codePays
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'titre': title,
+      'isbn': isbn,
+      'nbpage': nbPages,
+      'codepays': codePays
+    };
+  }
+
+  @override
+  String toString() {
+    return 'Book{title: $title, isbn: $isbn, nbpage: $nbPages, codePays: $codePays}';
+  }
 }
