@@ -2,7 +2,13 @@ import 'package:museum/models/Museum.dart';
 
 abstract class SMuseum {
 
-  void store(Museum museum);
+  Future<List<Museum>> all();
 
-  void update(Museum museum);
+  // Future<Museum> get(int numMus);
+
+  Future<void> store(Museum museum);
+
+  Future<void> update(Museum museum);
+
+  Future<bool> delete(int numMus);
 }

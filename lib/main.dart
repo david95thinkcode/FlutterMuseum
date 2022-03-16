@@ -1,3 +1,11 @@
+import 'dart:async';
+
+import 'package:museum/models/Country.dart';
+import 'package:museum/models/Museum.dart';
+import 'package:museum/routes/editmuseumroute.dart';
+import 'package:museum/services/CountryService.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:flutter/material.dart';
 import 'package:museum/routes/museumhomeroute.dart';
 import 'package:museum/routes/libraryhomeroute.dart';
@@ -5,8 +13,13 @@ import 'package:museum/routes/bookhomeroute.dart';
 import 'package:museum/routes/countryhomeroute.dart';
 import 'package:museum/routes/createvisitroute.dart';
 import 'package:museum/routes/createmuseumroute.dart';
+import 'package:museum/config/databaser.dart';
 
-void main() {
+// Avoid errors caused by flutter upgrade.
+import 'package:flutter/widgets.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -49,34 +62,43 @@ class _MyHomePageState extends State<MyHomePage> {
   ElevatedButton.styleFrom(
       textStyle: const TextStyle(fontSize: 20)
   );
+  late Databaser _databaser;
+  late CountryService _countryService;
+  late List<Country> list;
 
   @override
   void initState() {
-    // TODO:
-  }
-
-  void _onFabPressed() {
-    Navigator.pushNamed(context, "/visits/create");
-  }
-
-  void _onMuseumPressed() {
-    Navigator.pushNamed(context, "/museums");
-  }
-
-  void _onLibraryPressed() {
-    Navigator.pushNamed(context, "/libraries");
-  }
-
-  void _onBooksPressed() {
-    Navigator.pushNamed(context, "/books");
-  }
-
-  void _onCountryPressed() {
-    Navigator.pushNamed(context, "/countries");
+    super.initState();
+    _databaser = Databaser();
+    _databaser.initDB().whenComplete(() async {
+      _countryService = CountryService(_databaser);
+      list = await _countryService.all();
+      print("List of countries => ${list.length}");
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    void _onFabPressed() {
+      Navigator.pushNamed(context, "/visits/create");
+    }
+
+    void _onMuseumPressed() {
+      Navigator.pushNamed(context, "/museums");
+    }
+
+    void _onLibraryPressed() {
+      Navigator.pushNamed(context, "/libraries");
+    }
+
+    void _onBooksPressed() {
+      Navigator.pushNamed(context, "/books");
+    }
+
+    void _onCountryPressed() {
+      Navigator.pushNamed(context, "/countries");
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -114,7 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       _onCountryPressed()
                     },
                     child: Text("Pays")
-                ),
+                )
               ],
             ),
           ],
@@ -128,3 +150,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+

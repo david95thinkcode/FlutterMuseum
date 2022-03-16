@@ -1,7 +1,11 @@
+import 'package:museum/config/databaser.dart';
 import 'package:museum/contracts/SLibrary.dart';
+import 'package:museum/contracts/sqlitecrudable.dart';
 import 'package:museum/models/Library.dart';
 
-class LibraryService implements SLibrary {
+class LibraryService extends SQLiteCrudable implements SLibrary {
+  LibraryService(Databaser databaser) : super(databaser);
+
 
   @override
   Library get(int museumId, String bookIsbn) {

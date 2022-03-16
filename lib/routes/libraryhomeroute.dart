@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
-class LibraryHomeRoute extends StatelessWidget {
+class LibraryHomeRoute extends StatefulWidget {
   const LibraryHomeRoute({Key? key}) : super(key: key);
 
+  @override
+  State<LibraryHomeRoute> createState() => _LibraryHomeRouteState();
+}
+
+class _LibraryHomeRouteState extends State<LibraryHomeRoute> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,3 +24,4 @@ class LibraryHomeRoute extends StatelessWidget {
     );
   }
 }
+

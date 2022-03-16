@@ -1,30 +1,14 @@
 class Library {
-  late int _id;
-  late int _numMus;
-  late String _isbn;
-  late String _dateAchat;
+  static String table = "library";
+  final int id;
+  final int numMus;
+  final String isbn;
+  final String dateAchat;
 
-  int get id => _id;
-
-  set id(int value) {
-    _id = value;
-  }
-
-  int get numMus => _numMus;
-
-  String get dateAchat => _dateAchat;
-
-  set dateAchat(String value) {
-    _dateAchat = value;
-  }
-
-  String get isbn => _isbn;
-
-  set isbn(String value) {
-    _isbn = value;
-  }
-
-  set numMus(int value) {
-    _numMus = value;
-  }
+  const Library({
+    required this.id,
+      required this.numMus,
+      required this.isbn,
+      required this.dateAchat
+  });
 }

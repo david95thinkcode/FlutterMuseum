@@ -1,3 +1,5 @@
+import 'package:museum/config/databaser.dart';
+
 abstract class Crudable {
 
   void getAll();

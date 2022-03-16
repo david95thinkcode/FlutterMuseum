@@ -1,23 +1,12 @@
 class Visit {
-  late int _id;
-  late int _numMus;
-  late String _jour;
+  static String table = "visit";
+  final int id;
+  final int numMus;
+  final String jour;
 
-  int get id => _id;
-
-  set id(int value) {
-    _id = value;
-  }
-
-  int get numMus => _numMus;
-
-  String get jour => _jour;
-
-  set jour(String value) {
-    _jour = value;
-  }
-
-  set numMus(int value) {
-    _numMus = value;
-  }
+  const Visit({
+    required this.id,
+    required this.numMus,
+    required this.jour
+  });
 }

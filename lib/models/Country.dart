@@ -1,16 +1,25 @@
 class Country {
-  late String _codePays;
-  int _nbHabitant = 0;
+  static String table = "country";
 
-  String get codePays => _codePays;
+  final String codePays;
+  final int nbHabitant;
 
-  set codePays(String value) {
-    _codePays = value;
+  const Country({
+    required this.codePays,
+    required this.nbHabitant
+  });
+
+  // Convert a Dog into a Map. The keys must correspond to the names of the
+  // columns in the database.
+  Map<String, dynamic> toMap() {
+    return {
+      'codepays': codePays,
+      'nbhabitant': nbHabitant,
+    };
   }
 
-  int get nbHabitant => _nbHabitant;
-
-  set nbHabitant(int value) {
-    _nbHabitant = value;
+  @override
+  String toString() {
+    return 'Country{codePays: $codePays, nbHabitants: $nbHabitant}';
   }
 }

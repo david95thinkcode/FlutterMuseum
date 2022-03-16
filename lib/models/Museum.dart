@@ -1,31 +1,32 @@
 
 class Museum {
-  late int _numMus;
-  String _nomMus = "";
-  int _nbLivres = 0;
-  late String _codePays;
+  static String table = "museum";
 
-  int get numMus => _numMus;
+  final int? numMus;
+  final String nomMus;
+  final int nbLivres;
+  final String codePays;
 
-  set numMus(int value) {
-    _numMus = value;
+  const Museum({
+    this.numMus,
+    required this.nomMus,
+    required this.nbLivres,
+    required this.codePays
+  });
+
+  // Convert a Dog into a Map. The keys must correspond to the names of the
+  // columns in the database.
+  Map<String, dynamic> toMap() {
+    return {
+      'numMus': numMus,
+      'nomMus': nomMus,
+      'nblivres': nbLivres,
+      'codepays': codePays
+    };
   }
 
-  String get nomMus => _nomMus;
-
-  String get codePays => _codePays;
-
-  set codePays(String value) {
-    _codePays = value;
-  }
-
-  int get nbLivres => _nbLivres;
-
-  set nbLivres(int value) {
-    _nbLivres = value;
-  }
-
-  set nomMus(String value) {
-    _nomMus = value;
+  @override
+  String toString() {
+    return 'Museum{numMus: $numMus, nomMus: $nomMus, nbLivres: $nbLivres, codePays: $codePays}';
   }
 }

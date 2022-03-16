@@ -1,48 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:museum/routes/createmuseumroute.dart';
-import 'package:museum/routes/createvisitroute.dart';
+import 'package:museum/config/databaser.dart';
+import 'package:museum/models/Museum.dart';
+import 'package:museum/services/MuseumService.dart';
+import 'package:museum/widgets/museumlist.dart';
 
-class MuseumHomeRoute extends StatelessWidget {
+class MuseumHomeRoute extends StatefulWidget {
   const MuseumHomeRoute({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    void _onNewVisitPressed() {
-        Navigator.pushNamed(context, "/visits/create");
-    }
+  State<MuseumHomeRoute> createState() => _MuseumHomeRouteState();
+}
 
-    void _onNewMuseumPressed() {
-      Navigator.pushNamed(context, "/museums/create");
-    }
+class _MuseumHomeRouteState extends State<MuseumHomeRoute> {
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void _onFabpressed() {
+    Navigator.pushNamed(context, "/museums/create");
+  }
+
+  @override
+  Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Gestion des Musées")
-      ),
-      body: Center(
-       child: Column(
-           mainAxisAlignment: MainAxisAlignment.center,
-           children: <Widget>[
-             Column(
-               children: [
-                 ElevatedButton(
-                     onPressed: () => {
-                       _onNewMuseumPressed()
-                      },
-                     child: const Text("Nouveau Musée")
-                 ),
-                 ElevatedButton(
-                     onPressed: () => {
-                       _onNewVisitPressed()
-                     },
-                     child: const Text("Nouvelle Visite")
-                 )
-               ],
-             ),
-             Text("Musées", style: Theme.of(context).textTheme.headline4,)
-           ]
-       ),
-      )
+        appBar: AppBar(
+            title: const Text("Musées")
+        ),
+        body: const MuseumList(),
+        floatingActionButton: FloatingActionButton(
+          tooltip: "Ajouter",
+          child: const Icon(Icons.add),
+          onPressed: _onFabpressed,
+        ),
     );
   }
 }

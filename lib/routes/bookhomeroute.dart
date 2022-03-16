@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
-class BookHomeRoute extends StatelessWidget {
+class BookHomeRoute extends StatefulWidget {
   const BookHomeRoute({Key? key}) : super(key: key);
 
+  @override
+  State<BookHomeRoute> createState() => _BookHomeRouteState();
+}
+
+class _BookHomeRouteState extends State<BookHomeRoute> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,3 +24,4 @@ class BookHomeRoute extends StatelessWidget {
     );
   }
 }
+
