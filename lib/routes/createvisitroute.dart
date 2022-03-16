@@ -235,7 +235,7 @@ class _CreateVisitRouteState extends State<CreateVisitRoute> {
                           ),
                         ),
                         Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
                                   margin: EdgeInsets.symmetric(vertical: 10),

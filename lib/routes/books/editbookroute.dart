@@ -224,7 +224,7 @@ class _EditBookRouteState extends State<EditBookRoute> {
                               )),
                         ),
                         Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
                                   margin: EdgeInsets.symmetric(vertical: 10),

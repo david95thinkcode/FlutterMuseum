@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:museum/models/Country.dart';
 import 'package:museum/models/Museum.dart';
 import 'package:museum/routes/books/createbookroute.dart';
+import 'package:museum/routes/countries/createcountryroute.dart';
 import 'package:museum/routes/editmuseumroute.dart';
 import 'package:museum/routes/library/createlibraryroute.dart';
 import 'package:museum/routes/visit/visithomeroute.dart';
@@ -47,6 +48,7 @@ class MyApp extends StatelessWidget {
         '/books': (context) => const BookHomeRoute(),
         '/books/create': (context) => const CreateBookRoute(),
         '/countries': (context) => const CountryHomeRoute(),
+        '/countries/create': (context) => const CreateCountryRoute(),
         '/visits': (context) => const VisitHomeRoute(),
         '/visits/create': (context) => const CreateVisitRoute(),
       },

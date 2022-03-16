@@ -2,66 +2,32 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:museum/config/databaser.dart';
+import 'package:museum/models/Book.dart';
 import 'package:museum/models/Country.dart';
 import 'package:museum/models/Museum.dart';
 import 'package:museum/services/CountryService.dart';
-import 'package:museum/services/MuseumService.dart';
+import 'package:museum/services/BookService.dart';
 
-class CreateMuseumRoute extends StatefulWidget {
-  const CreateMuseumRoute({Key? key}) : super(key: key);
+class CreateCountryRoute extends StatefulWidget {
+  const CreateCountryRoute({Key? key}) : super(key: key);
 
   @override
-  State<CreateMuseumRoute> createState() => _CreateMuseumRouteState();
+  State<CreateCountryRoute> createState() => _CreateCountryRouteState();
 }
 
-class _CreateMuseumRouteState extends State<CreateMuseumRoute> {
+class _CreateCountryRouteState extends State<CreateCountryRoute> {
   late Databaser _databaser;
-  late MuseumService _museumService;
   late CountryService _countryService;
-  final nameController = TextEditingController();
-  final nbBookController = TextEditingController();
-  final countryController = TextEditingController();
+  final _codePaysController = TextEditingController();
+  final _nbHabitantController = TextEditingController();
   bool _isSubmitting = false;
-  bool _shouldShowCountryPicker = false;
-  Country? _selectedCountry;
-  List<Country> _countriesList = [];
-  List<Widget> _countriesListWidget = [];
 
   @override
   void initState() {
     super.initState();
     _databaser = Databaser();
-    _museumService = MuseumService(_databaser);
     _countryService = CountryService(_databaser);
-    _fetchCountries();
-  }
-
-  _fetchCountries() async {
-    _countriesList = await _countryService.all();
-
-    setState(() {
-      _countriesListWidget = [];
-      for (var x in _countriesList) {
-        _countriesListWidget.add(Text(x.codePays));
-      }
-    });
-  }
-
-  _getCountryAtIndex(int index) {
-    if (_countriesList.isNotEmpty && index < _countriesList.length) {
-      var selectedCountry = _countriesList[index];
-      setState(() {
-        _selectedCountry = selectedCountry;
-        countryController.text = "${selectedCountry.codePays}";
-      });
-    }
-  }
-
-  _resetForm() {
-    nameController.text = "";
-    nbBookController.text = "0";
-    countryController.text = "";
-    _isSubmitting = false;
+    _initForm();
   }
 
   _formIsNotFilledCorrectly() {
@@ -69,29 +35,27 @@ class _CreateMuseumRouteState extends State<CreateMuseumRoute> {
         msg: "Erreur. Veuillez tout renseigner!",
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 5,
+        timeInSecForIosWeb: 2,
         backgroundColor: Colors.redAccent,
         textColor: Colors.white,
         fontSize: 16.0);
   }
 
-  _save() async {
-    String name = nameController.text;
-    int booksCount =
-        nbBookController.text.isNotEmpty ? int.parse(nbBookController.text) : 0;
+  _initForm() {
+    //
+  }
 
+  _save() async {
     setState(() {
       _isSubmitting = true;
     });
-    var selectedCountry = _selectedCountry;
-    if (selectedCountry != null && booksCount > 0 && name.isNotEmpty) {
-      Museum museum = Museum(
-          nomMus: name,
-          nbLivres: booksCount,
-          codePays: selectedCountry.codePays);
-
+    if (_codePaysController.text.isNotEmpty &&
+        _nbHabitantController.text.isNotEmpty) {
+      Country updatedCountry = Country(
+          codePays: _codePaysController.text,
+          nbHabitant: int.parse(_nbHabitantController.text));
       try {
-        await _museumService.store(museum);
+        await _countryService.store(updatedCountry);
         Fluttertoast.showToast(
             msg: "Enregistré",
             toastLength: Toast.LENGTH_SHORT,
@@ -125,7 +89,7 @@ class _CreateMuseumRouteState extends State<CreateMuseumRoute> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Ajouter un Musée"),
+        title: const Text("Ajouter un pays"),
       ),
       body: Center(
           child: Column(
@@ -134,7 +98,7 @@ class _CreateMuseumRouteState extends State<CreateMuseumRoute> {
               child: Column(
             children: [
               Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: Form(
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -143,56 +107,23 @@ class _CreateMuseumRouteState extends State<CreateMuseumRoute> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: 0, vertical: 16),
                             child: TextFormField(
-                              controller: nameController,
+                              controller: _codePaysController,
                               decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
                                   hintText: 'Entrez ici...',
-                                  labelText: 'Nom du musée (*)'),
+                                  labelText: 'Code Pays (*)'),
                             )),
                         Padding(
                           padding:
                               EdgeInsets.symmetric(horizontal: 0, vertical: 16),
                           child: TextFormField(
                             keyboardType: TextInputType.number,
-                            controller: nbBookController,
+                            controller: _nbHabitantController,
                             decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
                                 hintText: 'Entrez un nombre superieur a zéro',
-                                labelText: 'Nombre de livres (*)'),
+                                labelText: 'Nombre d\'habitants (*)'),
                           ),
-                        ),
-                        Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 0, vertical: 16),
-                            child: TextFormField(
-                              controller: countryController,
-                              readOnly: true,
-                              decoration: const InputDecoration(
-                                  hintText: 'Touchez pour changer',
-                                  border: OutlineInputBorder(),
-                                  labelText: 'Pays'),
-                              onTap: () {
-                                setState(() {
-                                  _shouldShowCountryPicker =
-                                      !_shouldShowCountryPicker;
-                                });
-                              },
-                            )),
-                        Visibility(
-                          visible: _shouldShowCountryPicker,
-                          child: Container(
-                              height: 130,
-                              child: CupertinoPicker(
-                                children: _countriesListWidget,
-                                onSelectedItemChanged: (value) {
-                                  _getCountryAtIndex(value);
-                                },
-                                itemExtent: 25,
-                                diameterRatio: 1,
-                                useMagnifier: true,
-                                magnification: 1.1,
-                                looping: true,
-                              )),
                         ),
                         Row(
                             mainAxisAlignment: MainAxisAlignment.center,

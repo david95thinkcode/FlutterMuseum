@@ -201,7 +201,7 @@ class _CreateBookRouteState extends State<CreateBookRoute> {
                               )),
                         ),
                         Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
                                   margin: EdgeInsets.symmetric(vertical: 10),

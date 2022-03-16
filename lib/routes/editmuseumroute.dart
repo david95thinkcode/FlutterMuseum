@@ -207,7 +207,7 @@ class _EditMuseumRouteState extends State<EditMuseumRoute> {
                               )),
                         ),
                         Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
                                   margin: EdgeInsets.symmetric(vertical: 10),
