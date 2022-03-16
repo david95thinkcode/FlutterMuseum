@@ -80,9 +80,10 @@ class Databaser {
   static String sqlCreateVisitTable() {
     return """
     CREATE TABLE ${Visit.table}(
-      "nummus"	INTEGER NOT NULL,
-      "jour"	TEXT NOT NULL,
-      "nbvisiteurs"	INTEGER DEFAULT 0
+      id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL
+      nummus	INTEGER NOT NULL,
+      jour	TEXT NOT NULL,
+      nbvisiteurs	INTEGER DEFAULT 0
     )
     """;
   }

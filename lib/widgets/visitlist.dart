@@ -58,20 +58,6 @@ class _VisitListState extends State<VisitList> {
       }
   }
 
-  // _editItem(Visit visit) {
-  //   print(visit);
-  //   Navigator.push(
-  //     context,
-  //     MaterialPageRoute(
-  //       builder: (context) => EditMuseumRoute(museum: visit),
-  //     ),
-  //   );
-  // }
-
-  _showForm(int id) {
-
-  }
-
   @override
   Widget build(BuildContext context) {
     return !_isLoading
@@ -88,12 +74,6 @@ class _VisitListState extends State<VisitList> {
                     width: 100,
                     child: Row(
                       children: [
-                        // IconButton(
-                        //   icon: const Icon(Icons.edit),
-                        //   onPressed: () => {
-                        //     _editItem(_list[index])
-                        //   }
-                        // ),
                         IconButton(
                           icon: const Icon(Icons.delete),
                           onPressed: () => {

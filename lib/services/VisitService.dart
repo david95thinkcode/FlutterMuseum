@@ -42,7 +42,7 @@ class VisitService extends SQLiteCrudable {
   Future<bool> delete(Visit visit) async {
     int affectedRowsCount = await db.database.delete(
       Visit.table,
-      where: 'nummus = ? nbvisiteurs = ? jour = ?',
+      where: 'nummus = ? and nbvisiteurs = ? and jour = ?',
       whereArgs: [visit.numMus, visit.nbVisiteurs, visit.jour],
     );
 

@@ -27,7 +27,7 @@ class _VisitHomeRouteState extends State<VisitHomeRoute> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text("Musées")
+          title: const Text("Visites")
       ),
       body: const VisitList(),
       floatingActionButton: FloatingActionButton(
