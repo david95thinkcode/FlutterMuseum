@@ -48,7 +48,13 @@ class _EditMuseumRouteState extends State<EditMuseumRoute> {
       for (var x in _countriesList) {
         _countriesListWidget.add(Text(x.codePays));
       }
+      _selectedCountry = _getCountryWithCode(_museum.codePays);
     });
+  }
+
+  Country _getCountryWithCode(String countryCode) {
+    Country c = _countriesList.firstWhere((element) => element.codePays == countryCode);
+    return c;
   }
 
   _getCountryAtIndex(int index) {

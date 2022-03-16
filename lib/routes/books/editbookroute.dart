@@ -142,7 +142,7 @@ class _EditBookRouteState extends State<EditBookRoute> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Mettre a jour un Musée"),
+        title: const Text("Mettre a jour un Ouvrage"),
       ),
       body: Center(
           child: Column(

@@ -221,34 +221,6 @@ class _CreateVisitRouteState extends State<CreateVisitRoute> {
                                 labelText: 'Date de la visite'),
                           ),
                         ),
-                        // Padding(
-                        //   padding:
-                        //       EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                        //   child: Row(
-                        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //     children: <Widget>[
-                        //       Row(
-                        //         mainAxisAlignment: MainAxisAlignment.start,
-                        //         children: const <Widget>[
-                        //           Icon(
-                        //             CupertinoIcons.clock,
-                        //             color: CupertinoColors.lightBackgroundGray,
-                        //             size: 28,
-                        //           ),
-                        //           SizedBox(width: 6),
-                        //           Text(
-                        //             'Date de la visite',
-                        //             style: Styles.deliveryTimeLabel,
-                        //           ),
-                        //         ],
-                        //       ),
-                        //       Text(
-                        //         DateFormat.yMMMd().format(_selectedDate),
-                        //         style: Styles.deliveryTime,
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
                         Visibility(
                           visible: _shouldShowDatePicker,
                           child: Container(

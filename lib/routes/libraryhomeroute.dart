@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:museum/widgets/librarylist.dart';
 
 class LibraryHomeRoute extends StatefulWidget {
   const LibraryHomeRoute({Key? key}) : super(key: key);
@@ -8,18 +9,22 @@ class LibraryHomeRoute extends StatefulWidget {
 }
 
 class _LibraryHomeRouteState extends State<LibraryHomeRoute> {
+
+  void _onFabpressed() {
+    Navigator.pushNamed(context, "/libraries/create");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Libraries Home"),
+          title: const Text("Bibliothèque")
       ),
-      body: Center(
-        child: Column(
-          children: const <Widget>[
-            Text("Libraries Home")
-          ],
-        ),
+      body: const LibraryList(),
+      floatingActionButton: FloatingActionButton(
+        tooltip: "Nouvel achat",
+        child: const Icon(Icons.add),
+        onPressed: _onFabpressed,
       ),
     );
   }
