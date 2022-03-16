@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:museum/config/databaser.dart';
 import 'package:museum/models/Book.dart';
+import 'package:museum/routes/books/bookdetailsroute.dart';
 import 'package:museum/routes/books/editbookroute.dart';
 import 'package:museum/services/BookService.dart';
 
@@ -68,8 +69,13 @@ class _BookListState extends State<BookList> {
     );
   }
 
-  _showForm(int id) {
-
+  _onItemTaped(Book book) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => BookDetailsRoute(book: book),
+      ),
+    );
   }
 
   @override
@@ -80,10 +86,13 @@ class _BookListState extends State<BookList> {
         itemBuilder: (context, index) =>
             Card(
               color: Colors.orange[200],
-              margin: const EdgeInsets.all(15),
+              margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 8,),
               child: ListTile(
                   title: Text(_list[index].title),
                   // subtitle: Text("${_list[index].isbn} - ${_list[index].nomMus}"),
+                  onTap: () {
+                    _onItemTaped(_list[index]);
+                  },
                   trailing: SizedBox(
                     width: 100,
                     child: Row(

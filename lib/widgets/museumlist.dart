@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:museum/config/databaser.dart';
 import 'package:museum/models/Museum.dart';
 import 'package:museum/routes/editmuseumroute.dart';
+import 'package:museum/routes/museumdetailsroute.dart';
 import 'package:museum/services/MuseumService.dart';
 
 class MuseumList extends StatefulWidget {
@@ -40,9 +41,7 @@ class _MuseumListState extends State<MuseumList> {
   }
 
   _deleteItem(int id) async {
-    //
     bool done = await _museumService.delete(id);
-
       Fluttertoast.showToast(
           msg: done ? "Supprimé" : "Echec de suppression. Réessayez",
           toastLength: Toast.LENGTH_SHORT,
@@ -59,11 +58,19 @@ class _MuseumListState extends State<MuseumList> {
   }
 
   _editItem(Museum museum) {
-    print(museum);
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => EditMuseumRoute(museum: museum),
+      ),
+    );
+  }
+
+  _onItemTapped(Museum museum) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MuseumDetailsRoute(museum: museum),
       ),
     );
   }
@@ -79,11 +86,20 @@ class _MuseumListState extends State<MuseumList> {
         itemCount: _list.length,
         itemBuilder: (context, index) =>
             Card(
-              color: Colors.orange[200],
-              margin: const EdgeInsets.all(15),
+              elevation: 3.0,
+              borderOnForeground: true,
+              // shadowColor: Colors.pink,
+              // color: Colors.grey,
+              margin: const EdgeInsets.all(10),
               child: ListTile(
-                  title: Text(_list[index].nomMus),
+                  title: Text(
+                      _list[index].nomMus,
+                    style: TextStyle(color: Colors.pinkAccent, fontWeight: FontWeight.bold),
+                  ),
                   subtitle: Text("${_list[index].numMus} - ${_list[index].nomMus}"),
+                  onTap: () {
+                    _onItemTapped(_list[index]);
+                  },
                   trailing: SizedBox(
                     width: 100,
                     child: Row(
