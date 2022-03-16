@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:museum/models/Country.dart';
 import 'package:museum/models/Museum.dart';
 import 'package:museum/routes/editmuseumroute.dart';
+import 'package:museum/routes/visit/visithomeroute.dart';
 import 'package:museum/services/CountryService.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
         '/libraries': (context) => const LibraryHomeRoute(),
         '/books': (context) => const BookHomeRoute(),
         '/countries': (context) => const CountryHomeRoute(),
+        '/visits': (context) => const VisitHomeRoute(),
         '/visits/create': (context) => const CreateVisitRoute(),
       },
     );
@@ -99,6 +101,10 @@ class _MyHomePageState extends State<MyHomePage> {
       Navigator.pushNamed(context, "/countries");
     }
 
+    void _onVisitsPressed() {
+      Navigator.pushNamed(context, "/visits");
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -136,6 +142,11 @@ class _MyHomePageState extends State<MyHomePage> {
                       _onCountryPressed()
                     },
                     child: Text("Pays")
+                ),
+                ElevatedButton(
+                    style: _ansbtnStyle,
+                    onPressed: _onVisitsPressed,
+                    child: Text("Visites")
                 )
               ],
             ),

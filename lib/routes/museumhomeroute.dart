@@ -24,7 +24,6 @@ class _MuseumHomeRouteState extends State<MuseumHomeRoute> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         appBar: AppBar(
             title: const Text("Musées")
