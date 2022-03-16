@@ -184,6 +184,8 @@ class _CreateVisitRouteState extends State<CreateVisitRoute> {
                                 itemExtent: 25,
                                 diameterRatio: 1,
                                 useMagnifier: true,
+                                magnification: 1.1,
+                                looping: true,
                               )),
                         ),
                         Padding(
