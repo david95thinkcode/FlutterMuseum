@@ -1,27 +1,20 @@
-import 'dart:async';
 
-import 'package:museum/models/Country.dart';
-import 'package:museum/models/Museum.dart';
-import 'package:museum/routes/books/createbookroute.dart';
-import 'package:museum/routes/countries/createcountryroute.dart';
-import 'package:museum/routes/editmuseumroute.dart';
-import 'package:museum/routes/library/createlibraryroute.dart';
-import 'package:museum/routes/museumdetailsroute.dart';
-import 'package:museum/routes/visit/visithomeroute.dart';
-import 'package:museum/services/CountryService.dart';
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:flutter/material.dart';
-import 'package:museum/routes/museumhomeroute.dart';
-import 'package:museum/routes/libraryhomeroute.dart';
-import 'package:museum/routes/bookhomeroute.dart';
-import 'package:museum/routes/countryhomeroute.dart';
-import 'package:museum/routes/createvisitroute.dart';
-import 'package:museum/routes/createmuseumroute.dart';
-import 'package:museum/config/databaser.dart';
-
 // Avoid errors caused by flutter upgrade.
 import 'package:flutter/widgets.dart';
+import 'package:museum/src/config/databaser.dart';
+import 'package:museum/src/models/Country.dart';
+import 'package:museum/src/routes/bookhomeroute.dart';
+import 'package:museum/src/routes/books/createbookroute.dart';
+import 'package:museum/src/routes/countries/createcountryroute.dart';
+import 'package:museum/src/routes/countryhomeroute.dart';
+import 'package:museum/src/routes/createmuseumroute.dart';
+import 'package:museum/src/routes/createvisitroute.dart';
+import 'package:museum/src/routes/library/createlibraryroute.dart';
+import 'package:museum/src/routes/libraryhomeroute.dart';
+import 'package:museum/src/routes/museumhomeroute.dart';
+import 'package:museum/src/routes/visit/visithomeroute.dart';
+import 'package:museum/src/services/CountryService.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -123,27 +116,92 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Column(
               children: [
-                ElevatedButton(
-                    style: _ansbtnStyle,
-                    onPressed: () => {
-                      _onMuseumPressed()
-                    },
-                    child: const Text("Museum")
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Text(
+                    "Welcome!",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold, color: Colors.pink),
+                  ),
                 ),
-                ElevatedButton(
-                    style: _ansbtnStyle,
-                    onPressed: () => {
-                      _onLibraryPressed()
+                Card(
+                  elevation: 15.0,
+                  color: Colors.yellow,
+                  borderOnForeground: true,
+                  child: InkWell(
+                    onTap: () {
+                      _onMuseumPressed();
                     },
-                    child: const Text("Bibliothèque")
+                    child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            // const Image(image: AssetImage('assets/images/icons8-lumière-allumée-100.png'),),
+                            Text(
+                              "Musées",
+                              style: TextStyle(
+                                  fontSize: 40, fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.center,
+                            )
+                          ],
+                        ),
+                      ),
+                    )
                 ),
-                ElevatedButton(
-                    style: _ansbtnStyle,
-                    onPressed: () => {
-                      _onBooksPressed()
-                    },
-                    child: const Text("Ouvrage")
+                Card(
+                    elevation: 7.0,
+                    color: Colors.brown,
+                    borderOnForeground: true,
+                    child: InkWell(
+                      onTap: () {
+                        _onLibraryPressed();
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            // const Image(image: AssetImage('assets/images/icons8-lumière-allumée-100.png'),),
+                            Text(
+                              "Bibliothèque",
+                              style: TextStyle(
+                                color: Colors.white,
+                                  fontSize: 24, fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.center,
+                            )
+                          ],
+                        ),
+                      ),
+                    )
                 ),
+                Card(
+                    elevation: 15.0,
+                    color: Colors.green,
+                    borderOnForeground: true,
+                    child: InkWell(
+                      onTap: () {
+                        _onBooksPressed();
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            // const Image(image: AssetImage('assets/images/icons8-lumière-allumée-100.png'),),
+                            Text(
+                              "Ouvrages",
+                              style: TextStyle(
+                                color: Colors.white,
+                                  fontSize: 25, fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.center,
+                            )
+                          ],
+                        ),
+                      ),
+                    )
+                ),
+
                 ElevatedButton(
                     style: _ansbtnStyle,
                     onPressed: () => {
