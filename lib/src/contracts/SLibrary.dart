@@ -1,4 +1,5 @@
 import 'package:museum/src/models/Library.dart';
+import 'package:museum/src/models/libe.dart';
 
 abstract class SLibrary {
 
@@ -7,6 +8,8 @@ abstract class SLibrary {
   void update(Library library);
 
   Library get(int museumId, String bookIsbn);
+
+  Future<List<Libe>> getMuseumLibrary(int museumId);
 
   List<Library> getAll();
 

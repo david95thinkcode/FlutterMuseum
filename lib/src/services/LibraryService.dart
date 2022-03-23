@@ -1,13 +1,13 @@
 import 'package:museum/src/config/databaser.dart';
 import 'package:museum/src/contracts/SLibrary.dart';
 import 'package:museum/src/contracts/sqlitecrudable.dart';
+import 'package:museum/src/models/Book.dart';
 import 'package:museum/src/models/Library.dart';
+import 'package:museum/src/models/libe.dart';
 import 'package:sqflite/sqflite.dart';
 
 class LibraryService extends SQLiteCrudable implements SLibrary {
   LibraryService(Databaser databaser) : super(databaser);
-
-
 
   @override
   Future<List<Library>> all() async {
@@ -75,5 +75,32 @@ class LibraryService extends SQLiteCrudable implements SLibrary {
   List<Library> getAllByDateAndMuseum(int museumId, String date) {
     // TODO: implement getAllByDateAndMuseum
     throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Libe>> getMuseumLibrary(int museumId) async {
+    List<Libe> _list = [];
+    final List<Map<String, dynamic>> maps = await db.database.rawQuery("""
+      SELECT * FROM ${Book.table}, ${Library.table}
+      WHERE ${Library.table}.nummus = ${museumId}
+      AND ${Library.table}.isbn = ${Book.table}.isbn
+      """
+    );
+
+    _list = List.generate(maps.length, (i) {
+      return Libe(
+          library: maps[i]['id'],
+          museum: museumId,
+          date: maps[i]['dateachat'],
+          book: Book(
+            title: maps[i]['titre'],
+            isbn: maps[i]['isbn'],
+            nbPages: maps[i]['nbpage'],
+            codePays: maps[i]['codepays'],
+          )
+      );
+    });
+
+    return _list;
   }
 }

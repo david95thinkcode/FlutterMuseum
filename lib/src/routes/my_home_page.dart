@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:museum/src/config/databaser.dart';
-import 'package:museum/src/models/Country.dart';
-import 'package:museum/src/services/CountryService.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -19,8 +17,6 @@ class _MyHomePageState extends State<MyHomePage> {
       textStyle: const TextStyle(fontSize: 20)
   );
   late Databaser _databaser;
-  late CountryService _countryService;
-  late List<Country> list;
 
   @override
   void initState() {
@@ -68,9 +64,8 @@ class _MyHomePageState extends State<MyHomePage> {
             Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: const Text(
-                    "Welcome!",
+                  padding: EdgeInsets.all(15.0),
+                  child: Text("Welcome to ${widget.title}",
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold, color: Colors.pink),
                   ),

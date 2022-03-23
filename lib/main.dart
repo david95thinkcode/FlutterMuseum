@@ -2,16 +2,16 @@
 import 'package:flutter/material.dart';
 // Avoid errors caused by flutter upgrade.
 import 'package:flutter/widgets.dart';
-import 'package:museum/src/routes/bookhomeroute.dart';
+import 'package:museum/src/routes/books/bookhomeroute.dart';
 import 'package:museum/src/routes/books/createbookroute.dart';
+import 'package:museum/src/routes/countries/countryhomeroute.dart';
 import 'package:museum/src/routes/countries/createcountryroute.dart';
-import 'package:museum/src/routes/countryhomeroute.dart';
-import 'package:museum/src/routes/createmuseumroute.dart';
-import 'package:museum/src/routes/createvisitroute.dart';
 import 'package:museum/src/routes/library/createlibraryroute.dart';
-import 'package:museum/src/routes/libraryhomeroute.dart';
-import 'package:museum/src/routes/museumhomeroute.dart';
+import 'package:museum/src/routes/library/libraryhomeroute.dart';
+import 'package:museum/src/routes/museums/createmuseumroute.dart';
+import 'package:museum/src/routes/museums/museumhomeroute.dart';
 import 'package:museum/src/routes/my_home_page.dart';
+import 'package:museum/src/routes/visit/createvisitroute.dart';
 import 'package:museum/src/routes/visit/visithomeroute.dart';
 
 void main() async {

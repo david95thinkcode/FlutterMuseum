@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:museum/src/config/databaser.dart';
+import 'package:museum/src/models/Museum.dart';
 import 'package:museum/src/models/Visit.dart';
+import 'package:museum/src/services/MuseumService.dart';
 import 'package:museum/src/services/VisitService.dart';
+import 'package:museum/src/utils.dart';
 
 class VisitHomeRoute extends StatefulWidget {
   const VisitHomeRoute({Key? key}) : super(key: key);
-
   @override
   State<VisitHomeRoute> createState() => _VisitHomeRouteState();
 }
@@ -15,8 +16,12 @@ class VisitHomeRoute extends StatefulWidget {
 class _VisitHomeRouteState extends State<VisitHomeRoute> {
   late Databaser _databaser;
   late VisitService _visitService;
+  late MuseumService _museumService;
   late List<Visit> _list;
+  late List<Museum> _museums;
+  List<Widget> _dialogChildren = [];
   bool _isLoading = false;
+  Museum? _selectedMuseum;
 
   @override
   void initState() {
@@ -24,45 +29,123 @@ class _VisitHomeRouteState extends State<VisitHomeRoute> {
     _list = [];
     _databaser = Databaser();
     _visitService = VisitService(_databaser);
+    _museumService = MuseumService(_databaser);
     _refresh();
   }
 
-  void _refresh() async {
+  void _refresh({bool forceRefresh = false}) async {
     _isLoading = true;
-    final data = await _visitService.all();
-    setState(() {
-      _list = data;
-    });
+    if (_dialogChildren.isEmpty) await _initMuseumDialogOptions();
+    var selection = _selectedMuseum;
+    if (_museums.isNotEmpty) {
+      _onFilterItemPicked(selection ?? _museums.first, forceRefresh: forceRefresh);
+    }
     _isLoading = false;
+  }
+
+  Future<bool> _initMuseumDialogOptions() async {
+    final mdata = await _museumService.all();
+    setState(() {
+      _museums = mdata;
+      for (Museum x in _museums) {
+        _dialogChildren.add(
+          SimpleDialogOption(
+            onPressed: () {
+              Navigator.pop(context, x);
+            },
+            child: Text(x.nomMus),
+          ),
+        );
+      }
+    });
+    return true;
+  }
+
+  _showAlertBox() async {
+    return showDialog<Museum>(
+        context: context,
+        builder: (BuildContext context) {
+          return SimpleDialog(
+              title: const Text('Choisir un musée'), children: _dialogChildren);
+        });
+  }
+
+  void _onFilterTaped() async {
+    dynamic tapedValue = await _showAlertBox();
+    if (tapedValue is Museum) {
+      _onFilterItemPicked(tapedValue);
+    }
+  }
+
+  void _onFilterItemPicked(Museum museum, {bool forceRefresh = false}) async {
+    var s = _selectedMuseum;
+    if (s == null) _selectedMuseum = museum;
+    if (forceRefresh) {
+      _selectedMuseum = museum;
+      List<Visit> newData = await _visitService.getMuseumVisits(museum.numMus!);
+      setState(() {
+        _list = newData;
+      });
+    } else {
+        if (s != museum) {
+          _selectedMuseum = museum;
+          List<Visit> newData = await _visitService.getMuseumVisits(museum.numMus!);
+          setState(() {
+            _list = newData;
+          });
+        }
+    }
   }
 
   void _onFabPressed() {
     Navigator.pushNamed(context, "/visits/create").then((value) {
-      _refresh();
+      _refresh(forceRefresh: true);
     });
   }
 
   _deleteItem(Visit v) async {
-    bool done = await _visitService.delete(v);
-
-    Fluttertoast.showToast(
-        msg: done ? "Supprimé" : "Echec de suppression. Réessayez",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: done ? Colors.greenAccent : Colors.redAccent,
-        textColor: done ? Colors.black : Colors.white,
-        fontSize: 16.0);
-
-    if (done) {
-      _refresh();
+    var deleteChoice = await showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Confirmation de retrait'),
+        content: Text('Etes-vous certain de supprimer la visite effectuée par ${v.firstname} ${v.lastname} au musée ${_selectedMuseum?.nomMus} ?'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Annuler'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Confirmer'),
+          ),
+        ],
+      ),
+    );
+    if (deleteChoice is bool) {
+      if (deleteChoice == true) _onDeletionConfirmed(v);
     }
+  }
+
+  _onDeletionConfirmed(Visit v) async {
+    bool done = await _visitService.delete(v);
+    Utils.deletionSuccessToast(done, null);
+    if (done) _refresh(forceRefresh: true);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Visites")),
+      appBar: AppBar(
+        title: const Text("Visites"),
+        actions: [
+          Padding(
+              padding: const EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: _onFilterTaped,
+                child: const Icon(Icons.filter_list_sharp, size: 26.0),
+              )),
+        ],
+      ),
       body: !_isLoading
           ? ListView.builder(
               itemCount: _list.length,
@@ -82,12 +165,12 @@ class _VisitHomeRouteState extends State<VisitHomeRoute> {
                 ),
               ),
             )
-          : CircularProgressIndicator(),
+          : const CircularProgressIndicator(),
       floatingActionButton: FloatingActionButton(
         tooltip: "Ajouter",
         child: const Icon(Icons.add),
         onPressed: _onFabPressed,
       ),
-    );
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked);
   }
 }

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:museum/src/config/databaser.dart';
 import 'package:museum/src/models/Country.dart';
 import 'package:museum/src/routes/countries/editcountryroute.dart';
 import 'package:museum/src/services/CountryService.dart';
+import 'package:museum/src/utils.dart';
 
 class CountryHomeRoute extends StatefulWidget {
   const CountryHomeRoute({Key? key}) : super(key: key);
-
   @override
   State<CountryHomeRoute> createState() => _CountryHomeRouteState();
 }
@@ -42,26 +41,35 @@ class _CountryHomeRouteState extends State<CountryHomeRoute> {
   }
 
   _deleteItem(String id) async {
-    //
-    bool done = await _countryService.delete(id);
-
-    Fluttertoast.showToast(
-        msg: done ? "Supprimé" : "Echec de suppression. Réessayez",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: done ? Colors.greenAccent : Colors.redAccent,
-        textColor: done ? Colors.black : Colors.white,
-        fontSize: 16.0
+    var deleteChoice = await showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Confirmation'),
+        content: const Text('Etes-vous certain de vouloir supprimer ce pays ?'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Annuler'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Confirmer'),
+          ),
+        ],
+      ),
     );
-
-    if (done) {
-      _refresh();
+    if (deleteChoice is bool) {
+      if (deleteChoice == true) _onDeletionConfirmed(id);
     }
   }
 
+  _onDeletionConfirmed(String id) async {
+    bool done = await _countryService.delete(id);
+    Utils.deletionSuccessToast(done, null);
+    if (done) _refresh();
+  }
+
   _editItem(Country country) {
-    print(country);
     Navigator.push(context, MaterialPageRoute(
         builder: (context) => EditCountryRoute(country: country),
       ),
@@ -74,7 +82,16 @@ class _CountryHomeRouteState extends State<CountryHomeRoute> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text("Pays")
+          title: const Text("Pays"),
+        actions: [
+          Padding(
+              padding: const EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: _onFabPressed,
+                child: const Icon(Icons.add_sharp, size: 26.0),
+              )
+          ),
+        ],
       ),
       body: !_isLoading
           ? ListView.builder(
@@ -108,13 +125,7 @@ class _CountryHomeRouteState extends State<CountryHomeRoute> {
                   )),
             ),
       )
-          : CircularProgressIndicator(),
-      floatingActionButton: FloatingActionButton(
-        tooltip: "Ajouter",
-        child: const Icon(Icons.add),
-        onPressed: _onFabPressed,
-      ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked
+          : const CircularProgressIndicator(),
     );
   }
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:museum/src/config/databaser.dart';
 import 'package:museum/src/models/Museum.dart';
-import 'package:museum/src/routes/editmuseumroute.dart';
-import 'package:museum/src/routes/museumdetailsroute.dart';
+import 'package:museum/src/routes/museums/editmuseumroute.dart';
+import 'package:museum/src/routes/museums/museumdetailsroute.dart';
 import 'package:museum/src/services/MuseumService.dart';
+import 'package:museum/src/utils.dart';
 
 class MuseumHomeRoute extends StatefulWidget {
   const MuseumHomeRoute({Key? key}) : super(key: key);
@@ -38,20 +38,32 @@ class _MuseumHomeRouteState extends State<MuseumHomeRoute> {
   }
 
   _deleteItem(int id) async {
-    bool done = await _museumService.delete(id);
-    Fluttertoast.showToast(
-        msg: done ? "Supprimé" : "Echec de suppression. Réessayez",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: done ? Colors.greenAccent : Colors.redAccent,
-        textColor: done ? Colors.black : Colors.white,
-        fontSize: 16.0
+    var deleteChoice = await showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Confirmation'),
+        content: const Text('Etes-vous certain de vouloir supprimer ce musée ?'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Annuler'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Confirmer'),
+          ),
+        ],
+      ),
     );
-
-    if (done) {
-      _refresh();
+    if (deleteChoice is bool) {
+      if (deleteChoice == true) _onDeletionConfirmed(id);
     }
+  }
+
+  _onDeletionConfirmed(int id) async {
+    bool done = await _museumService.delete(id);
+    Utils.deletionSuccessToast(done, null);
+    if (done) _refresh();
   }
 
   _editItem(Museum museum) {
@@ -82,7 +94,18 @@ class _MuseumHomeRouteState extends State<MuseumHomeRoute> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            title: const Text("Musées")
+            title: const Text("Musées"),
+          actions: [
+            Padding(
+                padding: EdgeInsets.only(right: 20.0),
+                child: GestureDetector(
+                  onTap: () {
+                    _onFabpressed();
+                  },
+                  child: Icon(Icons.add, size: 26.0,),
+                )
+            )
+          ],
         ),
         body: !_isLoading
             ? ListView.builder(
@@ -97,9 +120,9 @@ class _MuseumHomeRouteState extends State<MuseumHomeRoute> {
                 child: ListTile(
                     title: Text(
                       _list[index].nomMus,
-                      style: TextStyle(color: Colors.pinkAccent, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    subtitle: Text("${_list[index].numMus} - ${_list[index].nomMus}"),
+                    // subtitle: Text("${_list[index].numMus} - ${_list[index].nomMus}"),
                     onTap: () {
                       _onItemTapped(_list[index]);
                     },
@@ -124,12 +147,7 @@ class _MuseumHomeRouteState extends State<MuseumHomeRoute> {
                     )),
               ),
         )
-            : CircularProgressIndicator(),
-        floatingActionButton: FloatingActionButton(
-          tooltip: "Ajouter",
-          child: const Icon(Icons.add),
-          onPressed: _onFabpressed,
-        ),
+            : const CircularProgressIndicator(),
     );
   }
 }

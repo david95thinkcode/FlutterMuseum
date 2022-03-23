@@ -45,8 +45,21 @@ class CountryService extends SQLiteCrudable {
   }
 
   @override
-  void getRecord(id) {
-    // TODO: implement getRecord
+  Future<Country?> get(String countryCode) async {
+    final List<Map<String, dynamic>> maps = await db.database.query(
+        Country.table,
+        where: 'codepays = ?',
+        whereArgs: [countryCode]
+    );
+
+    if (maps.isNotEmpty) {
+      return Country(
+          countryCode: maps.first['codepays'],
+          countryName: maps.first['nompays'],
+          nbHabitant: maps.first['nbhabitant']
+      );
+    }
+    return null;
   }
 
   Future<void> update(Country c) async {

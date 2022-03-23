@@ -60,9 +60,6 @@ class VisitService extends SQLiteCrudable implements SVisit {
         nbVisiteurs: maps[i]['nbvisiteurs'],
       );
     });
-
-    print(_list);
-
     return _list;
   }
 
