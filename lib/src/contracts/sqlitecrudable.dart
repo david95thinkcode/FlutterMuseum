@@ -2,9 +2,9 @@
 import 'package:museum/src/config/databaser.dart';
 
 class SQLiteCrudable {
-  late Databaser db;
+  final Databaser db;
 
-  SQLiteCrudable(Databaser databaser) {
-    db = databaser;
+  SQLiteCrudable(this.db) {
+    //db = databaser;
   }
 }

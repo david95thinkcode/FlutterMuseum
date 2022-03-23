@@ -60,7 +60,7 @@ class _EditCountryRouteState extends State<EditCountryRoute> {
         _nbHabitantController.text.isNotEmpty) {
       Country updatedCountry = Country(
           countryCode: _country.countryCode,
-          countryName: _country.countryName,
+          countryName: _countryNameController.text,
           nbHabitant: int.parse(_nbHabitantController.text));
       try {
         await _countryService.update(updatedCountry);
