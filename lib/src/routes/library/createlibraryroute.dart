@@ -164,6 +164,7 @@ class _CreateLibraryRouteState extends State<CreateLibraryRoute> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Enregistrer un nouvel achat"),
+        backgroundColor: Styles.menuLibraryItemPrimaryColor,
       ),
       body: Center(
           child: Column(

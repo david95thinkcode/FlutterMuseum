@@ -4,6 +4,7 @@ import 'package:museum/src/models/Book.dart';
 import 'package:museum/src/routes/books/bookdetailsroute.dart';
 import 'package:museum/src/routes/books/editbookroute.dart';
 import 'package:museum/src/services/BookService.dart';
+import 'package:museum/src/styles.dart';
 import 'package:museum/src/utils.dart';
 
 class BookHomeRoute extends StatefulWidget {
@@ -96,7 +97,8 @@ class _BookHomeRouteState extends State<BookHomeRoute> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Ouvrages"),
+        title: Text("Ouvrages(${_list.length})"),
+        backgroundColor: Styles.menuBookItemPrimaryColor,
         actions: [
           Padding(
               padding: EdgeInsets.only(right: 20.0),
@@ -113,14 +115,13 @@ class _BookHomeRouteState extends State<BookHomeRoute> {
           ? ListView.builder(
               itemCount: _list.length,
               itemBuilder: (context, index) => Card(
-                color: Colors.orange[50],
+                // color: Colors.orange[50],
                 margin: const EdgeInsets.symmetric(
-                  horizontal: 15,
-                  vertical: 8,
+                  horizontal: 5,
+                  vertical: 5,
                 ),
                 child: ListTile(
                     title: Text(_list[index].title),
-                    // subtitle: Text("${_list[index].isbn} - ${_list[index].nomMus}"),
                     onTap: () {
                       _onItemTaped(_list[index]);
                     },
@@ -132,6 +133,7 @@ class _BookHomeRouteState extends State<BookHomeRoute> {
                               icon: const Icon(Icons.edit),
                               onPressed: () => {_editItem(_list[index])}),
                           IconButton(
+                            color: Colors.red,
                               icon: const Icon(Icons.delete),
                               onPressed: () => {
                                     _deleteItem(_list[index].isbn),

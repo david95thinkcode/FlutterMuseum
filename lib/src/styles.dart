@@ -1,8 +1,31 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 abstract class Styles {
 
   static const EdgeInsets formfieldPadding = EdgeInsets.symmetric(horizontal: 0, vertical: 16);
+
+  static const EdgeInsets menuItemPadding = EdgeInsets.all(15.0);
+
+  static const double menuItemElevation = 5;
+
+  static const double menuIconWidth = 130;
+
+  static const Color menuMuseumItemPrimaryColor = Colors.yellow;
+  static const Color menuVisitItemPrimaryColor = Colors.orange;
+  static const Color menuLibraryItemPrimaryColor = Colors.brown;
+  static const Color menuBookItemPrimaryColor = Colors.green;
+  static const Color menuCountryItemPrimaryColor = Colors.deepPurpleAccent;
+
+  static const TextStyle menuMuseumItemTextStyle = TextStyle(
+      color: Colors.black,
+      fontSize: 43, fontWeight: FontWeight.bold
+  );
+
+  static const TextStyle menuTextStyle = TextStyle(
+      color: Colors.white,
+      fontSize: 43, fontWeight: FontWeight.bold
+  );
 
   static const TextStyle productRowItemName = TextStyle(
     color: Color.fromRGBO(0, 0, 0, 0.8),

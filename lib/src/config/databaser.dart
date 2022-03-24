@@ -21,7 +21,8 @@ class Databaser {
     // Open the database and store the reference.
       String path = await getDatabasesPath();
       database = await openDatabase(
-        join(path, '25museum_database.db'),
+        // join(path, '25museum_database.db'),
+        join(path, '26museum_database.db'),
         onCreate: (db, version) async {
           await db.execute(sqlCreateCountryTable());
           await db.execute(sqlCreateBookTable());

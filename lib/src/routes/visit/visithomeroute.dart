@@ -5,6 +5,7 @@ import 'package:museum/src/models/Museum.dart';
 import 'package:museum/src/models/Visit.dart';
 import 'package:museum/src/services/MuseumService.dart';
 import 'package:museum/src/services/VisitService.dart';
+import 'package:museum/src/styles.dart';
 import 'package:museum/src/utils.dart';
 
 class VisitHomeRoute extends StatefulWidget {
@@ -22,6 +23,7 @@ class _VisitHomeRouteState extends State<VisitHomeRoute> {
   List<Widget> _dialogChildren = [];
   bool _isLoading = false;
   Museum? _selectedMuseum;
+  String _selectedMuseumLabel = "";
 
   @override
   void initState() {
@@ -85,6 +87,7 @@ class _VisitHomeRouteState extends State<VisitHomeRoute> {
       List<Visit> newData = await _visitService.getMuseumVisits(museum.numMus!);
       setState(() {
         _list = newData;
+        _selectedMuseumLabel = museum.nomMus;
       });
     } else {
         if (s != museum) {
@@ -92,6 +95,7 @@ class _VisitHomeRouteState extends State<VisitHomeRoute> {
           List<Visit> newData = await _visitService.getMuseumVisits(museum.numMus!);
           setState(() {
             _list = newData;
+            _selectedMuseumLabel = museum.nomMus;
           });
         }
     }
@@ -136,7 +140,11 @@ class _VisitHomeRouteState extends State<VisitHomeRoute> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Visites"),
+        title: ListTile(
+          title: Text("Visites(${_list.length})", style: const TextStyle(color:Colors.white, fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
+          subtitle: Text(_selectedMuseumLabel, style: const TextStyle(color:Colors.white), textAlign: TextAlign.center),
+        ),
+        backgroundColor: Styles.menuVisitItemPrimaryColor,
         actions: [
           Padding(
               padding: const EdgeInsets.only(right: 20.0),
@@ -150,14 +158,13 @@ class _VisitHomeRouteState extends State<VisitHomeRoute> {
           ? ListView.builder(
               itemCount: _list.length,
               itemBuilder: (context, index) => Card(
-                color: Colors.orange[50],
-                margin: const EdgeInsets.all(15),
                 child: ListTile(
                   title: Text(_list[index].firstname.toString() +
                       " " +
                       _list[index].lastname.toString()),
                   subtitle: Text("Date visite : ${_list[index].jour}"),
                   trailing: IconButton(
+                    color: Colors.red,
                       icon: const Icon(Icons.delete),
                       onPressed: () => {
                             _deleteItem(_list[index]),

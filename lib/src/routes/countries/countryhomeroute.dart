@@ -3,6 +3,7 @@ import 'package:museum/src/config/databaser.dart';
 import 'package:museum/src/models/Country.dart';
 import 'package:museum/src/routes/countries/editcountryroute.dart';
 import 'package:museum/src/services/CountryService.dart';
+import 'package:museum/src/styles.dart';
 import 'package:museum/src/utils.dart';
 
 class CountryHomeRoute extends StatefulWidget {
@@ -81,8 +82,10 @@ class _CountryHomeRouteState extends State<CountryHomeRoute> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      primary: true,
       appBar: AppBar(
           title: const Text("Pays"),
+          backgroundColor: Styles.menuCountryItemPrimaryColor,
         actions: [
           Padding(
               padding: const EdgeInsets.only(right: 20.0),
@@ -98,9 +101,7 @@ class _CountryHomeRouteState extends State<CountryHomeRoute> {
         itemCount: _list.length,
         itemBuilder: (context, index) =>
             Card(
-              // color: Colors.green[200],
-              shadowColor: Colors.green,
-              margin: const EdgeInsets.all(8),
+              // shadowColor: Colors.green,
               child: ListTile(
                   title: Text("${_list[index].countryName} (${_list[index].countryCode})"),
                   // subtitle: Text("${_list[index].nbHabitant} habitants"),
@@ -116,6 +117,7 @@ class _CountryHomeRouteState extends State<CountryHomeRoute> {
                         ),
                         IconButton(
                             icon: const Icon(Icons.delete),
+                            color: Colors.red,
                             onPressed: () => {
                               _deleteItem(_list[index].countryCode),
                             }

@@ -6,6 +6,7 @@ import 'package:museum/src/routes/books/bookhomeroute.dart';
 import 'package:museum/src/routes/books/createbookroute.dart';
 import 'package:museum/src/routes/countries/countryhomeroute.dart';
 import 'package:museum/src/routes/countries/createcountryroute.dart';
+import 'package:museum/src/routes/credit_page.dart';
 import 'package:museum/src/routes/library/createlibraryroute.dart';
 import 'package:museum/src/routes/library/libraryhomeroute.dart';
 import 'package:museum/src/routes/museums/createmuseumroute.dart';
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const MyHomePage(title: "My Museum"),
         '/museums': (context) => const MuseumHomeRoute(),
-        // '/museums/details': (context) => const MuseumDetailsRoute(),
+        '/credit': (context) => const CreditRoute(),
         '/museums/create': (context) => const CreateMuseumRoute(),
         '/libraries': (context) => const LibraryHomeRoute(),
         '/libraries/create': (context) => const CreateLibraryRoute(),

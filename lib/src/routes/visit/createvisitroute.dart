@@ -7,6 +7,7 @@ import 'package:museum/src/models/Museum.dart';
 import 'package:museum/src/models/Visit.dart';
 import 'package:museum/src/services/MuseumService.dart';
 import 'package:museum/src/services/VisitService.dart';
+import 'package:museum/src/styles.dart';
 
 class CreateVisitRoute extends StatefulWidget {
   const CreateVisitRoute({Key? key}) : super(key: key);
@@ -144,6 +145,7 @@ class _CreateVisitRouteState extends State<CreateVisitRoute> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Enregistrer visite"),
+        backgroundColor: Styles.menuVisitItemPrimaryColor,
       ),
       body: Center(
           child: Column(

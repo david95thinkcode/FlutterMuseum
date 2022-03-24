@@ -122,6 +122,7 @@ class _CreateBookRouteState extends State<CreateBookRoute> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Ajouter un Ouvrage"),
+        backgroundColor: Styles.menuBookItemPrimaryColor,
       ),
       body: Center(
           child: Column(

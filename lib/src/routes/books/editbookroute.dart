@@ -143,6 +143,7 @@ class _EditBookRouteState extends State<EditBookRoute> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Mettre a jour un Ouvrage"),
+        backgroundColor: Styles.menuBookItemPrimaryColor,
       ),
       body: Center(
           child: Column(

@@ -98,6 +98,7 @@ class _EditCountryRouteState extends State<EditCountryRoute> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Mettre a jour un pays"),
+        backgroundColor: Styles.menuCountryItemPrimaryColor,
       ),
       body: Center(
           child: Column(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:museum/src/config/databaser.dart';
+import 'package:museum/src/styles.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -29,8 +30,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    void _onFabPressed() {
-      Navigator.pushNamed(context, "/visits/create");
+    void _onCreditPressed() {
+      Navigator.pushNamed(context, "/credit");
     }
 
     void _onMuseumPressed() {
@@ -57,37 +58,33 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Column(
+      body: GridView.count(
+        padding: EdgeInsets.all(17.0),
+        scrollDirection: Axis.horizontal,
+        crossAxisCount: 2,
               children: [
-                Padding(
-                  padding: EdgeInsets.all(15.0),
-                  child: Text("Welcome to ${widget.title}",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold, color: Colors.pink),
-                  ),
-                ),
                 Card(
-                    elevation: 15.0,
-                    color: Colors.yellow,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                    elevation: Styles.menuItemElevation,
+                    color: Styles.menuMuseumItemPrimaryColor,
                     borderOnForeground: true,
                     child: InkWell(
                       onTap: () {
                         _onMuseumPressed();
                       },
                       child: Padding(
-                        padding: const EdgeInsets.all(15.0),
+                        padding: Styles.menuItemPadding,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: const [
-                            // const Image(image: AssetImage('assets/images/icons8-lumière-allumée-100.png'),),
-                            Text(
-                              "Musées",
-                              style: TextStyle(
-                                  fontSize: 40, fontWeight: FontWeight.bold),
+                            Image(
+                              width: Styles.menuIconWidth,
+                                image: AssetImage('assets/images/british-museum.png')
+                            ),
+                            Text("Musées",
+                              style: Styles.menuMuseumItemTextStyle,
                               textAlign: TextAlign.center,
                             )
                           ],
@@ -96,79 +93,132 @@ class _MyHomePageState extends State<MyHomePage> {
                     )
                 ),
                 Card(
-                    elevation: 7.0,
-                    color: Colors.brown,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                    elevation: Styles.menuItemElevation,
+                    color: Styles.menuVisitItemPrimaryColor,
+                    borderOnForeground: true,
+                    child: InkWell(
+                      onTap: () {
+                        _onVisitsPressed();
+                      },
+                      child: Padding(
+                        padding: Styles.menuItemPadding,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Image(
+                                width: Styles.menuIconWidth,
+                                image: AssetImage('assets/images/tour-guide.png')
+                            ),
+                            Text("Visites", style: Styles.menuTextStyle, textAlign: TextAlign.center,)
+                          ],
+                        ),
+                      ),
+                    )
+                ),
+                Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                    elevation: Styles.menuItemElevation,
+                    color: Styles.menuLibraryItemPrimaryColor,
                     borderOnForeground: true,
                     child: InkWell(
                       onTap: () {
                         _onLibraryPressed();
                       },
                       child: Padding(
-                        padding: const EdgeInsets.all(15.0),
+                        padding: Styles.menuItemPadding,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: const [
-                            // const Image(image: AssetImage('assets/images/icons8-lumière-allumée-100.png'),),
-                            Text(
-                              "Bibliothèque",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 24, fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.center,
-                            )
+                            Image(
+                                width: Styles.menuIconWidth,
+                                image: AssetImage('assets/images/library.png')
+                            ),
+                            Text("Bibliothèque", style: Styles.menuTextStyle, textAlign: TextAlign.center,)
                           ],
                         ),
                       ),
                     )
                 ),
                 Card(
-                    elevation: 15.0,
-                    color: Colors.green,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                    elevation: Styles.menuItemElevation,
+                    color: Styles.menuBookItemPrimaryColor,
                     borderOnForeground: true,
                     child: InkWell(
                       onTap: () {
                         _onBooksPressed();
                       },
                       child: Padding(
-                        padding: const EdgeInsets.all(15.0),
+                        padding: Styles.menuItemPadding,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: const [
-                            // const Image(image: AssetImage('assets/images/icons8-lumière-allumée-100.png'),),
-                            Text(
-                              "Ouvrages",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 25, fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.center,
-                            )
+                            Image(
+                                width: Styles.menuIconWidth,
+                                image: AssetImage('assets/images/books.png')
+                            ),
+                            Text("Ouvrages", style: Styles.menuTextStyle, textAlign: TextAlign.center)
                           ],
                         ),
                       ),
                     )
                 ),
-
-                ElevatedButton(
-                    style: _ansbtnStyle,
-                    onPressed: () => {
-                      _onCountryPressed()
-                    },
-                    child: Text("Pays")
+                Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                    elevation: Styles.menuItemElevation,
+                    color: Styles.menuCountryItemPrimaryColor,
+                    borderOnForeground: true,
+                    child: InkWell(
+                      onTap: ()  => _onCountryPressed(),
+                      child: Padding(
+                        padding: Styles.menuItemPadding,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Image(
+                                width: Styles.menuIconWidth,
+                                image: AssetImage('assets/images/countries.png')
+                            ),
+                            Text("Pays", style: Styles.menuTextStyle, textAlign: TextAlign.center)
+                          ],
+                        ),
+                      ),
+                    )
                 ),
-                ElevatedButton(
-                    style: _ansbtnStyle,
-                    onPressed: _onVisitsPressed,
-                    child: Text("Visites")
-                )
+                Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                    elevation: Styles.menuItemElevation,
+                    color: Colors.pink,
+                    borderOnForeground: true,
+                    child: InkWell(
+                      onTap: () => _onCreditPressed(),
+                      child: Padding(
+                        padding: Styles.menuItemPadding,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Image(
+                                width: Styles.menuIconWidth,
+                                image: AssetImage('assets/images/poem.png')
+                            ),
+                            Text("Credits", style: Styles.menuTextStyle, textAlign: TextAlign.center)
+                          ],
+                        ),
+                      ),
+                    )
+                ),
               ],
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _onFabPressed,
-        tooltip: 'Nouvelle visite',
-        child: const Icon(Icons.add_sharp),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

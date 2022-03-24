@@ -4,6 +4,7 @@ import 'package:museum/src/models/Museum.dart';
 import 'package:museum/src/models/libe.dart';
 import 'package:museum/src/services/LibraryService.dart';
 import 'package:museum/src/services/MuseumService.dart';
+import 'package:museum/src/styles.dart';
 import 'package:museum/src/utils.dart';
 
 class LibraryHomeRoute extends StatefulWidget {
@@ -21,6 +22,7 @@ class _LibraryHomeRouteState extends State<LibraryHomeRoute> {
   List<Widget> _dialogChildren = [];
   bool _isLoading = false;
   Museum? _selectedMuseum;
+  String _selectedMuseumLabel = "";
 
   @override
   void initState() {
@@ -120,6 +122,7 @@ class _LibraryHomeRouteState extends State<LibraryHomeRoute> {
       List<Libe> newData = await _libService.getMuseumLibrary(museum.numMus!);
       setState(() {
         _list = newData;
+        _selectedMuseumLabel = museum.nomMus;
       });
     } else {
       if (s != museum) {
@@ -127,6 +130,7 @@ class _LibraryHomeRouteState extends State<LibraryHomeRoute> {
         List<Libe> newData = await _libService.getMuseumLibrary(museum.numMus!);
         setState(() {
           _list = newData;
+          _selectedMuseumLabel = museum.nomMus;
         });
       }
     }
@@ -136,7 +140,11 @@ class _LibraryHomeRouteState extends State<LibraryHomeRoute> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Bibliothèque"),
+          title: ListTile(
+            title: Text("Bibliothèque - ${_list.length} ${_list.isNotEmpty ? 'ouvrages' : 'ouvrage'}", style: TextStyle(color:Colors.white, fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
+            subtitle: Text(_selectedMuseumLabel, style: const TextStyle(color:Colors.white), textAlign: TextAlign.center),
+          ),
+          backgroundColor: Styles.menuLibraryItemPrimaryColor,
           actions: [
             Padding(
                 padding: const EdgeInsets.only(right: 20.0),
@@ -150,13 +158,14 @@ class _LibraryHomeRouteState extends State<LibraryHomeRoute> {
             ? ListView.builder(
                 itemCount: _list.length,
                 itemBuilder: (context, index) => Card(
-                  color: Colors.orange[50],
+                  // color: Colors.orange[50],
                   margin: const EdgeInsets.all(15),
                   child: ListTile(
                     title: Text("${_list[index].book?.title}"),
                     subtitle: Text("Acheté le ${_list[index].date}"),
                     trailing: IconButton(
                         icon: const Icon(Icons.delete),
+                        color: Colors.red,
                         onPressed: () => {
                               _deleteItem(_list[index].library!),
                             }),

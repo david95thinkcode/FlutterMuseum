@@ -50,7 +50,7 @@ class _MuseumDetailsRouteState extends State<MuseumDetailsRoute> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(widget.museum.nomMus, style: textStyle),
+                      Text(widget.museum.nomMus, style: textStyle, textAlign: TextAlign.center),
                       Text("Numero: ${widget.museum.numMus.toString()}",
                           style: _othertextStyle),
                       Text("Pays: ${_countryLabel}",

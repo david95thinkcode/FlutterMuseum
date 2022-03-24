@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:museum/src/config/databaser.dart';
 import 'package:museum/src/models/Country.dart';
 import 'package:museum/src/services/CountryService.dart';
+import 'package:museum/src/styles.dart';
 
 class CreateCountryRoute extends StatefulWidget {
   const CreateCountryRoute({Key? key}) : super(key: key);
@@ -90,6 +91,7 @@ class _CreateCountryRouteState extends State<CreateCountryRoute> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Ajouter un pays"),
+        backgroundColor: Styles.menuCountryItemPrimaryColor,
       ),
       body: Center(
           child: Column(

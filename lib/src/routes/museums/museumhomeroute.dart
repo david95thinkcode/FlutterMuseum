@@ -94,7 +94,7 @@ class _MuseumHomeRouteState extends State<MuseumHomeRoute> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            title: const Text("Musées"),
+            title: Text("Musées (${_list.length})"),
           actions: [
             Padding(
                 padding: EdgeInsets.only(right: 20.0),
@@ -112,17 +112,11 @@ class _MuseumHomeRouteState extends State<MuseumHomeRoute> {
           itemCount: _list.length,
           itemBuilder: (context, index) =>
               Card(
-                elevation: 3.0,
-                borderOnForeground: true,
-                // shadowColor: Colors.pink,
-                // color: Colors.grey,
-                margin: const EdgeInsets.all(10),
                 child: ListTile(
                     title: Text(
                       _list[index].nomMus,
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontWeight: FontWeight.normal),
                     ),
-                    // subtitle: Text("${_list[index].numMus} - ${_list[index].nomMus}"),
                     onTap: () {
                       _onItemTapped(_list[index]);
                     },
@@ -137,6 +131,7 @@ class _MuseumHomeRouteState extends State<MuseumHomeRoute> {
                               }
                           ),
                           IconButton(
+                              color: Colors.red,
                               icon: const Icon(Icons.delete),
                               onPressed: () => {
                                 _deleteItem(_list[index].numMus!),
